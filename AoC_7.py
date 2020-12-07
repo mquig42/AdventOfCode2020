@@ -52,9 +52,10 @@ for line in file:
     container = re.match('\w+\W\w+', line).group()
     contents[container] = dict()
     for c in re.findall('\d+ \w+ \w+', line):
-        contents[container][re.search('\w+ \w+$',c).group()] = int(re.match('^\d+',c).group())
+        n = int(re.match('^\d+',c).group())
         c = c.lstrip('1234567890 ')
-        if not c in containers:
+        contents[container][c] = n
+        if c not in containers:
             containers[c] = set()
         containers[c].add(container)
 
