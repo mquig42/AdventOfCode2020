@@ -59,6 +59,7 @@ for line in file:
             containers[c] = set()
         containers[c].add(container)
 
+file.close()
 print('Part 1:', len(getContainers(containers, 'shiny gold')))
 print('Part 2:', countContents(contents, 'shiny gold'))
 
