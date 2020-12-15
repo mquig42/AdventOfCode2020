@@ -76,14 +76,6 @@ for line in file:
             mem2[a] = int(parsedLine[1])
 file.close()
 
-acc = 0
-for a in mem1:
-    acc += mem1[a]
-print('Part 1:', acc)
-
-acc = 0
-for a in mem2:
-    acc += mem2[a]
-print('Part 2:', acc)
-
+print('Part 1:', sum(mem1.values()))
+print('Part 2:', sum(mem2.values()))
 print('Elapsed Time:', '{0:0.3f}s'.format(time.time() - start_time))
