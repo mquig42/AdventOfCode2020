@@ -3,7 +3,7 @@
 # Advent of Code 2020 Day 17 Part 2
 # Mike Quigley
 #
-# Cellular automaton. This time, it's in an infinite 4D space.
+# Cellular automaton. This time, it's in an infinite 4-dimensional hypergrid.
 # I'm using the same approach as part 1, just adding one more dimension.
 # Dimensions are x, y, z, q with z and q starting at 0
 ################################################################################
