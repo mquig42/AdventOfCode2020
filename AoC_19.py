@@ -1,6 +1,6 @@
 ################################################################################
 # 2020-12-19
-# Advent of Code 2020 Day 19 Part 1
+# Advent of Code 2020 Day 19
 # Mike Quigley
 #
 # Match text against a rule system. Rules are numbered, and may be one of
@@ -11,10 +11,13 @@
 # Use a recursive function that takes string and rule number, returns either -1
 # if no match, or index of last matching char + 1.
 # If m matches rule 0, then match(rules, '0', m) will return len(m)
-# What if both options of an OR rule match different lengths of the string?
-#  -That doesn't happen in part 1
+# What if both options of | rule match different lengths of the string?
+#  -In part 1 this doesn't happen
+#  -In part 2, pick one value at random. This will work some of the time.
+#   Simply run the program repeatedly, and it's likely to find every match
 ################################################################################
 import time
+import random
 
 #Main recursive matching function
 def match(rules, r, m, start):
@@ -52,8 +55,8 @@ def match(rules, r, m, start):
         elif len(matches) == 1:
             return matches.pop()
         else:
-            print('Multiple subsequences matched')
-            return -1
+            #If there's more than one matching rule, return one at random
+            return random.choice([i for i in matches])
 
 #Checks message m against a linear sequence of rules. Useful for checking
 #one branch of a | rule
@@ -67,8 +70,10 @@ def match_seq(rules, rule, m, start):
 start_time = time.time()
 
 rules = dict()
+messages = []
+
+#Read rules and messages from file
 sec = 0
-acc = 0
 file = open('Input19.txt')
 for line in file:
     line = line.strip()
@@ -78,9 +83,27 @@ for line in file:
         lsplit = line.split(': ')
         rules[lsplit[0]] = lsplit[1]
     elif sec == 1:
-        acc += match(rules, '0', line, 0) == len(line)
+        messages.append(line)
 file.close()
 
-print('Part 1:', acc)
+#Part 1
+p1 = 0
+for msg in messages:
+    p1 += match(rules, '0', msg, 0) == len(msg)
+print('Part 1:', p1)
+
+#Modify rules for part 2
+rules['8'] = '42 | 42 8'
+rules['11'] = '42 31 | 42 11 31'
+
+#Part 2. Similar approach to part 1, but run it repeatedly and keep track of
+#which messages match each time. This usually works, but will sometimes be
+#a bit low. It *is* random after all.
+p2 = set()
+for i in range(100):
+    for msg in messages:
+        if match(rules, '0', msg, 0) == len(msg):
+            p2.add(msg)
+print('Part 2:', len(p2))
 
 print('Elapsed Time:', '{0:0.3f}s'.format(time.time() - start_time))
