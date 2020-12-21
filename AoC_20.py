@@ -20,7 +20,8 @@
 # Then locate all the monsters in the image (which may be flipped or rotated),
 # Then count the waves, which are any '#' pixels that aren't part of a monster
 #
-# This is by far the longest AoC program I've written this year
+# This is by far the longest AoC program I've written this year.
+# 234 sloc when my next largest is day 16 with 100
 ################################################################################
 import time
 import re
