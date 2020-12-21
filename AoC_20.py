@@ -99,22 +99,22 @@ def prettyprintgrid(grid):
 #Sea monster detector. Returns True if the coords are the top left corner
 #of a sea monster. Edits image to highlight monsters.
 def ismonster(grid, x, y):
-    monster = ['                  # ',
-               '#    ##    ##    ###',
-               ' #  #  #  #  #  #   ']
+    monster = ['                  _ ',
+               '\    __    __    /O>',
+               ' \  /  \  /  \  /   ']
 
     #Check image for monster pattern
     for mx in range(len(monster)):
         for my in range(len(monster[mx])):
-            if monster[mx][my] == '#' and grid[x+mx][y+my] != '#':
+            if monster[mx][my] != ' ' and grid[x+mx][y+my] != '#':
                 return False
 
     #If we reach this point, a monster has been found. Highlight it.
     for mx in range(len(monster)):
         editrow = [c for c in grid[x+mx]]
         for my in range(len(monster[mx])):
-            if monster[mx][my] == '#':
-                editrow[y+my] = 'O'
+            if monster[mx][my] != ' ':
+                editrow[y+my] = monster[mx][my]
         grid[x+mx] = ''.join(editrow)
             
     return True
