@@ -48,11 +48,10 @@ contents = dict()
 
 file = open('Input7.txt')
 for line in file:
-    line = line.strip()
-    container = re.match('\w+\W\w+', line).group()
+    container = re.match('\w+ \w+', line).group()
     contents[container] = dict()
     for c in re.findall('\d+ \w+ \w+', line):
-        n = int(re.match('^\d+',c).group())
+        n = int(re.match('\d+',c).group())
         c = c.lstrip('1234567890 ')
         contents[container][c] = n
         if c not in containers:
