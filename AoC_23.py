@@ -10,12 +10,17 @@
 #
 # This is a complete rewrite using dicts to implement circular linked lists.
 # Not only is it faster, it's simpler.
+#
+# Edit: Switched from dict to list (one line change) for moderate speedup
+# The difference from the first attempt
+# 1. list[position] = value. Insert requires slicing and takes linear time
+# 2. list[value] = next_value. Insert takes constant time. No hash calculations.
 ################################################################################
 import time
 
-#Converts a list into a dict-based circular linked list
+#Converts a list into a simulated circular linked list
 def makelist(inplist):
-    newlist = dict()
+    newlist = [0 for i in range(len(inplist)+1)]
     for i in range(len(inplist)-1):
         newlist[inplist[i]] = inplist[i+1]
     newlist[inplist[-1]] = inplist[0]
