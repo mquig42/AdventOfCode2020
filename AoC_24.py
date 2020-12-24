@@ -41,31 +41,25 @@ def getcoords(dirstr):
     return x, y, z
 
 #Copied from day 17. Added offsets, so the return values can be used directly
-#as loop params
+#as loop params. Also only return X and Y, can calculate Z from (X, Y)
 def getbounds(tiles):
     minX = float('inf')
     minY = float('inf')
-    minZ = float('inf')
     maxX = float('-inf')
     maxY = float('-inf')
-    maxZ = float('-inf')
 
     for c in tiles:
         minX = min(minX, c[0])
         minY = min(minY, c[1])
-        minZ = min(minZ, c[2])
         maxX = max(maxX, c[0])
         maxY = max(maxY, c[1])
-        maxZ = max(maxZ, c[2])
 
     minX -= 1
     minY -= 1
-    minZ -= 1
     maxX += 2
     maxY += 2
-    maxZ += 2
 
-    return (minX, minY, minZ), (maxX, maxY, maxZ)
+    return (minX, minY), (maxX, maxY)
 
 #Returns the number of adjacent black tiles
 def countneighbours(btiles, coords):
@@ -89,13 +83,12 @@ def nextcycle(btiles):
     rmin, rmax = getbounds(btiles)
     for x in range(rmin[0], rmax[0]):
         for y in range(rmin[1], rmax[1]):
-            for z in range(rmin[2], rmax[2]):
-                if x+y+z==0:
-                    if (x, y, z) in btiles:
-                        if not (0 < countneighbours(btiles, (x, y, z)) < 3):
-                            toDel.add((x, y, z))
-                    elif countneighbours(btiles, (x, y, z)) == 2:
-                        toAdd.add((x, y, z))
+            z = 0 - x - y
+            if (x, y, z) in btiles:
+                if not (0 < countneighbours(btiles, (x, y, z)) < 3):
+                    toDel.add((x, y, z))
+            elif countneighbours(btiles, (x, y, z)) == 2:
+                toAdd.add((x, y, z))
 
     for c in toAdd:
         btiles.add(c)
