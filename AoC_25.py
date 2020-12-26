@@ -13,16 +13,14 @@ def loopsize(pubkey):
     v = 1
     loop = 0
     while v != pubkey:
-        v *= sub
-        v = v % 20201227
+        v = (v * sub) % 20201227
         loop += 1
     return loop
 
 def transform(sub, loop):
     v = 1
     for i in range(loop):
-        v *= sub
-        v = v % 20201227
+        v = (v * sub) % 20201227
     return v
 
 #Entry point
