@@ -59,11 +59,13 @@ while True:
     elif instr == 'jmp':
         t1, t2 = runProg(instrs, pc+1, acc)
         if t1 == 'END':
+            print('Changed jmp to nop on line', pc+1)
             acc2 = t2
         pc += n
     else:
         t1, t2 = runProg(instrs, pc+n, acc)
         if t1 == 'END':
+            print('Changed nop to jmp on line', pc+1)
             acc2 = t2
         pc += 1
 
